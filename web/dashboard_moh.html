@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOH Conronavirus Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuex"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src=https://code.jquery.com/jquery-3.5.1.js></script>
+    <script src=https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js></script>
+    <script src="js/summary.js"></script>
+    <link rel="stylesheet" href="css/summary.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class= "top-bar">
+            <img src="img/moh_logo.png" alt="MOH Logo">
+            <h4 id="dashboardTitle">MOH Conronavirus Disease (COVID-19) Dashboard</h4>
+            <span id="date-update">Data last updated: 2021/2/23, 9:52am GMT</span>
+        </div>
+        <br>
+        <div class="table-responsive">
+            <table class="table" id="moh_table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">NRIC</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Contact No.</th>
+                <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in arr">
+                    <th v-text="item.count"></th>
+                    <td v-text="item.nric"></td>
+                    <td v-text="item.firstName"></td>
+                    <td v-text="item.lastName"></td>
+                    <td v-text="item.email"></td>
+                    <td v-text="item.contact"></td>
+                    <td><button type="button" class="btn btn-primary" style="width: 100%;" @click="del(item)">View Case</button></td>
+                </tr>
+            </tbody>
+            </table>
+        </div>  
+        </div>
+    </div>   
+      <script src="vue.js"></script>
+</body>
+</html>
