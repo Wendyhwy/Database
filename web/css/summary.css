@@ -37,6 +37,7 @@
 {
     font-weight:normal !important;
     font-size:15px !important; 
+    padding-right: 2px;
 }
 
 .dataTables_filter input{
@@ -51,3 +52,7 @@
     float:right;
     text-align:right;
 }
+
+div.dataTables_filter {
+    padding: 5px;
+  }
