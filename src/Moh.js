@@ -1,0 +1,173 @@
+// import logo from './logo.svg';
+// import './App.css';
+// import {
+//   Container,
+//   Grid,
+// } from '@material-ui/core';
+// import { makeStyles } from '@material-ui/core/styles';
+
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     flexGrow: 1,
+//   },
+
+// }));
+// function App() {
+//   // return (
+//   //   <div className="App">
+//   //     <header className="App-header">
+//   //       <img src={logo} className="App-logo" alt="logo" />
+//   //       <p>
+//   //         Edit <code>src/App.js</code> and save to reload.
+//   //       </p>
+//   //       <a
+//   //         className="App-link"
+//   //         href="https://reactjs.org"
+//   //         target="_blank"
+//   //         rel="noopener noreferrer"     
+//   //       >
+//   //         Learn React
+//   //       </a>
+//   //     </header>
+//   //   </div>
+//   // );
+//   const classes = useStyles();
+
+//   return (
+//     <div className={classes.root}>
+// <Grid container spacing={1}>
+//   <Grid container item xs={12} spacing={3}>
+//     Test
+//   </Grid>
+//   <Grid container item xs={12} spacing={3}>
+//   Test
+//   </Grid>
+//   <Grid container item xs={12} spacing={3}>
+//   Test
+//   </Grid>
+// </Grid>
+// </div>
+//   );
+// }
+
+// export default App;
+
+import React from 'react';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import logo from './moh_logo.png';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Button from '@material-ui/core/Button';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    margin: theme.spacing(3),
+  },
+  paper: {
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    
+  },
+  table: {
+    minWidth: 700,
+  },
+}));
+
+function createData(id, nric, firstName, lastName, email, contactNo) {
+  return { id, nric, firstName, lastName, email, contactNo };
+}
+
+const rows = [
+  createData(1, "S7351347H", "QiZhi", "Ang", "angqizhi@gmail.com", "99392018"),
+];
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
+export default function App() {
+  const classes = useStyles();
+
+  function FormRow() {
+    return (
+      <React.Fragment>
+        <Grid item xs={4}>
+          <Paper className={classes.paper}>item</Paper>
+        </Grid>
+        <Grid item xs={4}>
+          <Paper className={classes.paper}>item</Paper>
+        </Grid>
+        <Grid item xs={4}>
+          <Paper className={classes.paper}>item</Paper>
+        </Grid>
+      </React.Fragment>
+    );
+  }
+
+  return (
+    <div className={classes.root}>
+        <Grid container>
+        <img src={logo} />
+        </Grid>
+        <Grid container item xs={12}>
+          MOH Coronavirus Disease (COVID-19) Dashboard
+        </Grid>
+        <Grid container item xs={12}>
+        <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="customized table">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell>#</StyledTableCell>
+            <StyledTableCell align="left">NRIC</StyledTableCell>
+            <StyledTableCell align="left">First Name</StyledTableCell>
+            <StyledTableCell align="left">Last Name</StyledTableCell>
+            <StyledTableCell align="left">Email</StyledTableCell>
+            <StyledTableCell align="left">Contact No.</StyledTableCell>
+            <StyledTableCell align="left">Action</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {rows.map((row) => (
+            <StyledTableRow key={row.id}>
+              <StyledTableCell component="th" scope="row">
+                {row.id}
+              </StyledTableCell>
+              <StyledTableCell align="left">{row.nric}</StyledTableCell>
+              <StyledTableCell align="left">{row.firstName}</StyledTableCell>
+              <StyledTableCell align="left">{row.lastName}</StyledTableCell>
+              <StyledTableCell align="left">{row.email}</StyledTableCell>
+              <StyledTableCell align="left">{row.contactNo}</StyledTableCell>
+              <StyledTableCell align="left">
+                <Button variant="contained" color="primary">View Case</Button>
+                </StyledTableCell>
+            </StyledTableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+        </Grid>
+   
+    </div>
+  );
+}
