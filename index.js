@@ -1,8 +1,8 @@
-const express = require("express")
-const app = express()
+const express = require('express')
+const app = express();
 
 app.get("/", function (req,res){
-	res.send("WORKING!!")
-})
+	res.send("WORKING!!");
+});
 
-app.listen(process.env.POST || 5000) //for herouku 
+app.listen(process.env.POST || 8080); //for herouku 
