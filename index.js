@@ -5,4 +5,4 @@ app.get("/", function (req,res){
 	res.send("WORKING!!");
 });
 
-app.listen(process.env.POST || 80); //for herouku 
+app.listen(process.env.POST || 8080); //for herouku 
