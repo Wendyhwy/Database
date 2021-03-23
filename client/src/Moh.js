@@ -52,7 +52,7 @@
 
 // export default App;
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -64,6 +64,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
+import Axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -106,8 +107,41 @@ const StyledTableRow = withStyles((theme) => ({
     },
   },
 }))(TableRow);
+
+
+
+
+
+
 export default function App() {
   const classes = useStyles();
+  const [user, setUser] = useState([])
+
+  //backend
+
+
+    useEffect(() =>  {
+      Axios.get('http://localhost:3001/api/users')
+      .then(function (response) {
+        // alert("successful")
+        // console.log(response.data.recordset)
+        setUser(response.data.recordset)
+        // console.log(response.data["recordsets"][0][0]);
+      })
+
+  
+    })
+//   useEffect(()=> {
+  
+
+
+//     // Axios.get('http://localhost:3001/api/get')
+//     // .then((response) => {
+//     //   console.log("GET Response")
+//     //   console.log(response);f
+  
+//     // })
+// })
 
   function FormRow() {
     return (
@@ -148,7 +182,8 @@ export default function App() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          
+          {user.map((row) => (
             <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
                 {row.id}

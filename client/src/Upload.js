@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Box,
@@ -14,6 +14,8 @@ import {
     InputLabel,
     Select
   } from '@material-ui/core';
+import Axios from 'axios'
+
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -23,6 +25,25 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Upload() {
     const classes = useStyles();
+    const [id, setId] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [contactNo, setContactNo] = useState("");
+
+    const submitUser = () => {
+      Axios.post('http://localhost:3001/api/users',{
+        id:id,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        contactNo: contactNo
+
+      }).then(() => {
+        alert("successful insert")
+      });
+
+    }
     return (
         <div className={classes.root}>
      
@@ -38,7 +59,7 @@ export default function Upload() {
             container
             spacing={3}
           >
-            <Grid
+            {/* <Grid
               item
               md={12}
               xs={12}
@@ -52,8 +73,26 @@ export default function Upload() {
                 // value={profile.firstName}
                 variant="outlined"
               />
+                </Grid> */}
+                      <Grid
+              item
+              md={12}
+              xs={12}
+            >
+                <TextField
+                fullWidth
+                label="id"
+                name="id"
+                onChange={(e) => {
+                  setId(e.target.value)
+                }}
+                // onChange={handleChange}
+                required
+                // value={profile.firstName}
+                variant="outlined"
+              />
                 </Grid>
-                <Grid
+                {/* <Grid
               item
               md={12}
               xs={12}
@@ -67,23 +106,8 @@ export default function Upload() {
                 // value={profile.firstName}
                 variant="outlined"
               />
-                </Grid>
-                <Grid
-              item
-              md={12}
-              xs={12}
-            >
-                <TextField
-                fullWidth
-                label="Contact Number"
-                name="contactNumber"
-                // onChange={handleChange}
-                required
-                // value={profile.firstName}
-                variant="outlined"
-              />
-                </Grid>
-              <Grid
+                </Grid> */}
+                    <Grid
               item
               md={6}
               xs={6}
@@ -92,7 +116,9 @@ export default function Upload() {
                 fullWidth
                 label="First name"
                 name="firstName"
-                // onChange={handleChange}
+                onChange={(e) => {
+                  setFirstName(e.target.value)
+                }}
                 required
                 // value={profile.firstName}
                 variant="outlined"
@@ -110,14 +136,51 @@ export default function Upload() {
                 fullWidth
                 label="Last name"
                 name="lastName"
-                // onChange={handleChange}
+                onChange={(e) => {
+                  setLastName(e.target.value)
+                }}                
                 required
                 // value={profile.firstName}
                 variant="outlined"
               />
                 </Grid>
-
                 <Grid
+              item
+              md={12}
+              xs={12}
+            >
+                <TextField
+                fullWidth
+                label="Email"
+                name="email"
+                onChange={(e) => {
+                  setEmail(e.target.value)
+                }}
+                required
+                // value={profile.firstName}
+                variant="outlined"
+              />
+                </Grid>
+                <Grid
+              item
+              md={12}
+              xs={12}
+            >
+                <TextField
+                fullWidth
+                label="Contact Number"
+                name="contactNo"
+                onChange={(e) => {
+                  setContactNo(e.target.value)
+                }}
+                required
+                // value={profile.firstName}
+                variant="outlined"
+              />
+                </Grid>
+              
+
+                {/* <Grid
               item
               md={12}
               xs={12}
@@ -131,7 +194,7 @@ export default function Upload() {
                 // value={profile.firstName}
                 variant="outlined"
               />
-                </Grid>
+                </Grid> */}
                 
         </Grid>
         </CardContent>
@@ -141,7 +204,7 @@ export default function Upload() {
           justifyContent="flex-end"
           p={2}
         >
-            <Button>Submit</Button>
+            <Button onClick={submitUser}>Submit</Button>
           {/* <OkButton
                 color="primary"
                 variant="contained"
