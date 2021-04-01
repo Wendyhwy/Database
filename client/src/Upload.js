@@ -25,27 +25,28 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Upload() {
     const classes = useStyles();
-    const [id, setId] = useState("");
+    const [nric, setNric] = useState("")
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
     const [contactNo, setContactNo] = useState("");
-
-    let location = useLocation();
-    console.log(location)
+    const [tokenId, setTokenId] = useState("");
+    const [registeredAdd, setRegisteredAdd] = useState("");
+    const [email, setEmail] = useState("");
 
 
 
     const submitUser = () => {
-      Axios.post('http://localhost:3001/api/users',{
-        id:id,
+      Axios.post('http://localhost:3001/api/profile',{
+        nric: nric,
         firstName: firstName,
         lastName: lastName,
-        email: email,
-        contactNo: contactNo
-
+        contactNo: contactNo,
+        tokenId:tokenId,
+        registeredAdd: registeredAdd,
+        email: email
       }).then(() => {
-        alert("successful insert")
+        alert("nric" + " " + nric + "\n" + "firstName" + " " + firstName + "\n" + "lastName" + " " + lastName + "\n" + "contactNo" + " " + contactNo + "\n" + "tokenId" + " " + tokenId + "\n"
+        + "registeredAdd" + " " + registeredAdd + "\n" + "email" + " " + email + "\n")
       });
 
     }
@@ -64,40 +65,7 @@ export default function Upload() {
             container
             spacing={3}
           >
-            {/* <Grid
-              item
-              md={12}
-              xs={12}
-            >
-                <TextField
-                fullWidth
-                label="Token ID"
-                name="tokenId"
-                // onChange={handleChange}
-                required
-                // value={profile.firstName}
-                variant="outlined"
-              />
-                </Grid> */}
                       <Grid
-              item
-              md={12}
-              xs={12}
-            >
-                <TextField
-                fullWidth
-                label="id"
-                name="id"
-                onChange={(e) => {
-                  setId(e.target.value)
-                }}
-                // onChange={handleChange}
-                required
-                // value={profile.firstName}
-                variant="outlined"
-              />
-                </Grid>
-                {/* <Grid
               item
               md={12}
               xs={12}
@@ -106,12 +74,14 @@ export default function Upload() {
                 fullWidth
                 label="NRIC"
                 name="nric"
-                // onChange={handleChange}
+                onChange={(e) => {
+                  setNric(e.target.value)
+                }}    
                 required
-                // value={profile.firstName}
                 variant="outlined"
               />
-                </Grid> */}
+                </Grid>
+             
                     <Grid
               item
               md={6}
@@ -156,10 +126,10 @@ export default function Upload() {
             >
                 <TextField
                 fullWidth
-                label="Email"
-                name="email"
+                label="Contact Number"
+                name="contactNo"
                 onChange={(e) => {
-                  setEmail(e.target.value)
+                  setContactNo(e.target.value)
                 }}
                 required
                 // value={profile.firstName}
@@ -173,33 +143,49 @@ export default function Upload() {
             >
                 <TextField
                 fullWidth
-                label="Contact Number"
-                name="contactNo"
+                label="Token Id"
+                name="tokenId"
                 onChange={(e) => {
-                  setContactNo(e.target.value)
+                  setTokenId(e.target.value)
                 }}
                 required
                 // value={profile.firstName}
                 variant="outlined"
               />
                 </Grid>
-              
-
-                {/* <Grid
+                <Grid
               item
               md={12}
               xs={12}
             >
                 <TextField
                 fullWidth
-                label="Device"
-                name="device"
-                // onChange={handleChange}
+                label="Registered Add"
+                name="registeredAdd"
+                onChange={(e) => {
+                  setRegisteredAdd(e.target.value)
+                }}
+                required
+                variant="outlined"
+              />
+                </Grid>
+                <Grid
+              item
+              md={12}
+              xs={12}
+            >
+                <TextField
+                fullWidth
+                label="Email"
+                name="email"
+                onChange={(e) => {
+                  setEmail(e.target.value)
+                }}
                 required
                 // value={profile.firstName}
                 variant="outlined"
               />
-                </Grid> */}
+                </Grid>
                 
         </Grid>
         </CardContent>
@@ -210,14 +196,6 @@ export default function Upload() {
           p={2}
         >
             <Button onClick={submitUser}>Submit</Button>
-          {/* <OkButton
-                color="primary"
-                variant="contained"
-                type="submit"
-                onClick = {handleSubmit(addStaff.bind(null, profile))}
-              >
-                Create New Staff
-          </OkButton> */}
         </Box>
       </Card>
         </div>

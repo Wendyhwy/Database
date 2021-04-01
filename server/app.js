@@ -32,10 +32,21 @@ var dbConfig = {
 module.exports = dbConfig;
 
 
-//Function to connect to database and execute query
-
-var executeQuery = function(res, query){             
+//GET PROFILE
+app.post("/api/profile", (req,res) => {
+  const nric = req.body.nric
+  const firstName = req.body.firstName
+  const lastName = req.body.lastName
+  const contactNo = req.body.contactNo
+  const tokenId = req.body.tokenId
+  const registeredAdd = req.body.registeredAdd
+  const email = req.body.email
+  var contactQuery = "INSERT INTO [Contact] (contactNo, registeredAdd, email) VALUES ('" + contactNo + "','" + registeredAdd + "','" + email + "'); INSERT INTO [Profile] (nric, firstName, lastName,contactId, tokenId) VALUES ('" + nric + "','" + firstName + "','" + lastName + "',(SELECT contactNo from [CONTACT] WHERE contactNo = '" + contactNo + "'),(SELECT tokenId from [Token] WHERE tokenId = '" + tokenId + "'))"
+  // , 'SELECT "+tokenId+" WHERE "+tokenId+" = 1')
+  // var profileQuery = "INSERT INTO [Profile] (nric, firstName, lastName,contactId, tokenId) VALUES ('" + nric + "','" + firstName + "','" + lastName + "','SELECT contactId WHERE contactId = "+contactNo+"', 'SELECT "+tokenId+" WHERE "+tokenId+" = 1')"
+    // executeQuery (res, query);
     sql.connect(dbConfig, function (err) {
+      console.log("connectedfsafasdfsad")
         if (err) {   
             console.log("Error while connecting database :- " + err);
             res.send(err);
@@ -44,11 +55,14 @@ var executeQuery = function(res, query){
           // create Request object
           var request = new sql.Request();
           // query to the database
-          request.query(query, function (err, response) {
+    
+          
+          request.query(contactQuery,function (err, response) {
               console.log(response)
             if (err) {
               console.log("Error while querying database :- " + err);
               res.send(err);
+            
               }
               else {
                 console.log(response);
@@ -56,13 +70,17 @@ var executeQuery = function(res, query){
               }
            
           });
+
+
         }
-    });           
-}
+    });  
+})
+
+
+
 
 
 //GET ALL ACTIVE USERS FOR PATHWAYS
-
 
 app.post("/api/users", (req,res) => {
   const id = req.body.id
