@@ -77,79 +77,37 @@ app.post("/api/profile", (req,res) => {
 })
 
 
+app.get("/api/profile", function(req, res){
 
-
-
-//GET ALL ACTIVE USERS FOR PATHWAYS
-
-app.post("/api/users", (req,res) => {
-  const id = req.body.id
-  const firstName = req.body.firstName
-  const lastName = req.body.lastName
-  const email = req.body.email
-  const contactNo = req.body.contactNo
-   var query = "INSERT INTO [Users] (id,firstName,lastName,email,contactNo) VALUES ('" + id + "','" + firstName + "','" + lastName + "','" + email + "','" + contactNo + "')"
-    // executeQuery (res, query);
-    sql.connect(dbConfig, function (err) {
-      console.log("connectedfsafasdfsad")
-        if (err) {   
-            console.log("Error while connecting database :- " + err);
+  var query = "SELECT nric, firstName , lastName, tokenId,contactId, email, registeredAdd FROM [Profile],[Contact] WHERE [Profile].contactId = [Contact].contactNo";
+  sql.connect(dbConfig, function (err) {
+      if (err) {   
+          console.log("Error while connecting database :- " + err);
+          res.send(err);
+      }
+      else {
+        
+        // create Request object
+        var request = new sql.Request();
+        // query to the database
+        request.query(query, function (err, response) {
+            console.log(response)
+          if (err) {
+            console.log("Error while querying database :- " + err);
             res.send(err);
-        }
-        else {
-          // create Request object
-          var request = new sql.Request();
-          // query to the database
-    
-          
-          request.query(query,function (err, response) {
-              console.log(response)
-            if (err) {
-              console.log("Error while querying database :- " + err);
-              res.send(err);
-            
-              }
-              else {
-                console.log(response);
-                res.send(response);
-              }
-           
-          });
-        }
-    });  
-})
+            }
+            else {
+              res.send(response);
 
-
-
-app.get("/api/users", function(req, res){
-    var query = "SELECT * FROM [Users]";
-    // executeQuery(res, query);
-    sql.connect(dbConfig, function (err) {
-
-        if (err) {   
-            console.log("Error while connecting database :- " + err);
-            res.send(err);
-        }
-        else {
-          
-          // create Request object
-          var request = new sql.Request();
-          // query to the database
-          request.query(query, function (err, response) {
-              console.log(response)
-            if (err) {
-              console.log("Error while querying database :- " + err);
-              res.send(err);
-              }
-              else {
-                res.send(response);
-
-              }
-           
-          });
-        }
-    });  
+            }
+         
+        });
+      }
+  });  
 });
+
+
+
 
 app.listen(3001, () => {
     console.log("hello")

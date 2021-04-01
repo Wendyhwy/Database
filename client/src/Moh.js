@@ -122,7 +122,7 @@ export default function App() {
 
 
     useEffect(() =>  {
-      Axios.get('http://localhost:3001/api/users')
+      Axios.get('http://localhost:3001/api/profile')
       .then(function (response) {
         // alert("successful")
         // console.log(response.data.recordset)
@@ -147,32 +147,30 @@ export default function App() {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>#</StyledTableCell>
             <StyledTableCell align="left">NRIC</StyledTableCell>
             <StyledTableCell align="left">First Name</StyledTableCell>
             <StyledTableCell align="left">Last Name</StyledTableCell>
-            <StyledTableCell align="left">Email</StyledTableCell>
             <StyledTableCell align="left">Contact No.</StyledTableCell>
+            <StyledTableCell align="left">Token Id</StyledTableCell>
+            <StyledTableCell align="left">Email</StyledTableCell>
             <StyledTableCell align="left">Action</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           
           {user.map((row) => (
-            <StyledTableRow key={row.id}>
-              <StyledTableCell component="th" scope="row">
-                {row.id}
-              </StyledTableCell>
+            <StyledTableRow key={row.nric}>
               <StyledTableCell align="left">{row.nric}</StyledTableCell>
               <StyledTableCell align="left">{row.firstName}</StyledTableCell>
               <StyledTableCell align="left">{row.lastName}</StyledTableCell>
+              <StyledTableCell align="left">{row.contactId}</StyledTableCell>
+              <StyledTableCell align="left">{row.tokenId}</StyledTableCell>
               <StyledTableCell align="left">{row.email}</StyledTableCell>
-              <StyledTableCell align="left">{row.contactNo}</StyledTableCell>
 
               <StyledTableCell align="left">
                 
                          <Link
-                         to={`/retrieve/${row.id}`}
+                         to={`/retrieve/items`}
                          state={{ row }}
                        >
        <Button variant="contained" color="primary">View Case</Button>
