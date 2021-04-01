@@ -119,24 +119,24 @@ export default function Retrieve() {
   const [user, setUser] = useState([])
 
   let location = useLocation();
-  console.log(location)
-
   //backend
 
 
-    // useEffect(() =>  {
-    //   Axios.get('http://localhost:3001/api/users')
-    //   .then(function (response) {
-    //     // alert("successful")
-    //     // console.log(response.data.recordset)
-    //     setUser(response.data.recordset)
-    //     // console.log(response.data["recordsets"][0][0]);
-    //   })
+
+  useEffect(() =>  {
+    Axios.get('http://localhost:3001/api/other',{params: {tokenId:location.state.row.tokenId}})
+    .then(function (response) {
+      // alert("successful")
+      // console.log(response.data.recordset)
+
+      setUser(response.data.recordset)
+      // console.log(response.data["recordsets"][0][0]);
+    })
+
+
+  })
 
   
-    // })
-
-
 
 
   return (
@@ -152,27 +152,24 @@ export default function Retrieve() {
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>#</StyledTableCell>
-            <StyledTableCell align="left">NRIC</StyledTableCell>
+          <StyledTableCell align="left">NRIC</StyledTableCell>
             <StyledTableCell align="left">First Name</StyledTableCell>
             <StyledTableCell align="left">Last Name</StyledTableCell>
-            <StyledTableCell align="left">Email</StyledTableCell>
             <StyledTableCell align="left">Contact No.</StyledTableCell>
+            <StyledTableCell align="left">Token Id</StyledTableCell>
+            <StyledTableCell align="left">Email</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           
-          {rows.map((row) => (
-            <StyledTableRow key={row.id}>
-              <StyledTableCell component="th" scope="row">
-                {row.id}
-              </StyledTableCell>
+        {user.map((row) => (
+            <StyledTableRow key={row.nric}>
               <StyledTableCell align="left">{row.nric}</StyledTableCell>
               <StyledTableCell align="left">{row.firstName}</StyledTableCell>
               <StyledTableCell align="left">{row.lastName}</StyledTableCell>
+              <StyledTableCell align="left">{row.contactId}</StyledTableCell>
+              <StyledTableCell align="left">{row.tokenId}</StyledTableCell>
               <StyledTableCell align="left">{row.email}</StyledTableCell>
-              <StyledTableCell align="left">{row.contactNo}</StyledTableCell>
-
             </StyledTableRow>
           ))}
         </TableBody>

@@ -106,6 +106,35 @@ app.get("/api/profile", function(req, res){
   });  
 });
 
+app.get("/api/other", function(req, res){
+  const tokenId = req.query.tokenId
+
+  var query = "SELECT nric, firstName , lastName, tokenId,contactId, email, registeredAdd FROM [Profile], [Contact], [TransactionDetails] WHERE [Profile].contactId = [Contact].contactNo and [Profile].tokenId = (SELECT otherTokenId FROM [TransactionDetails] WHERE [TransactionDetails].userTokenId = '" + tokenId + "')";
+  sql.connect(dbConfig, function (err) {
+      if (err) {   
+          console.log("Error while connecting database :- " + err);
+          res.send(err);
+      }
+      else {
+        
+        // create Request object
+        var request = new sql.Request();
+        // query to the database
+        request.query(query, function (err, response) {
+            console.log(response)
+          if (err) {
+            console.log("Error while querying database :- " + err);
+            res.send(err);
+            }
+            else {
+              res.send(response);
+
+            }
+         
+        });
+      }
+  });  
+});
 
 
 
