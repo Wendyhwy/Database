@@ -53,23 +53,24 @@
 // export default App;
 
 import React, { Component } from 'react'; 
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'; 
+import { BrowserRouter, Routes, Route } from 'react-router-dom'; 
 import MOH from './Moh';
 import Upload from './Upload';
-
+import Retrieve from './Retrieve'
 import './App.css'; 
   
 class App extends Component { 
   render() { 
     return ( 
-       <Router> 
+       <BrowserRouter> 
  
-            <Switch> 
-              <Route exact path='/' component={MOH}></Route> 
-              <Route exact path='/upload' component={Upload}></Route> 
-            </Switch> 
+            <Routes> 
+              <Route path='/' element={<MOH/>}></Route> 
+              <Route path='/upload' element={<Upload/>}></Route> 
+              <Route path='/retrieve/:id' element={<Retrieve/>}></Route>
+            </Routes> 
          
-       </Router> 
+       </BrowserRouter> 
    ); 
   } 
 } 

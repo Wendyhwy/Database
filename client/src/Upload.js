@@ -15,7 +15,7 @@ import {
     Select
   } from '@material-ui/core';
 import Axios from 'axios'
-
+import { useLocation, useParams } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -30,6 +30,11 @@ export default function Upload() {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [contactNo, setContactNo] = useState("");
+
+    let location = useLocation();
+    console.log(location)
+
+
 
     const submitUser = () => {
       Axios.post('http://localhost:3001/api/users',{

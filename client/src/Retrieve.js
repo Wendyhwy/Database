@@ -65,7 +65,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import Axios from "axios";
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -114,24 +114,29 @@ const StyledTableRow = withStyles((theme) => ({
 
 
 
-export default function App() {
+export default function Retrieve() {
   const classes = useStyles();
   const [user, setUser] = useState([])
+
+  let location = useLocation();
+  console.log(location)
 
   //backend
 
 
-    useEffect(() =>  {
-      Axios.get('http://localhost:3001/api/users')
-      .then(function (response) {
-        // alert("successful")
-        // console.log(response.data.recordset)
-        setUser(response.data.recordset)
-        // console.log(response.data["recordsets"][0][0]);
-      })
+    // useEffect(() =>  {
+    //   Axios.get('http://localhost:3001/api/users')
+    //   .then(function (response) {
+    //     // alert("successful")
+    //     // console.log(response.data.recordset)
+    //     setUser(response.data.recordset)
+    //     // console.log(response.data["recordsets"][0][0]);
+    //   })
 
   
-    })
+    // })
+
+
 
 
   return (
@@ -140,7 +145,7 @@ export default function App() {
         <img src={logo} />
         </Grid>
         <Grid container item xs={12}>
-          MOH Coronavirus Disease (COVID-19) Dashboard
+          Infected person: {location.state.row.firstName + " " + location.state.row.lastName}
         </Grid>
         <Grid container item xs={12}>
         <TableContainer component={Paper}>
@@ -153,12 +158,11 @@ export default function App() {
             <StyledTableCell align="left">Last Name</StyledTableCell>
             <StyledTableCell align="left">Email</StyledTableCell>
             <StyledTableCell align="left">Contact No.</StyledTableCell>
-            <StyledTableCell align="left">Action</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           
-          {user.map((row) => (
+          {rows.map((row) => (
             <StyledTableRow key={row.id}>
               <StyledTableCell component="th" scope="row">
                 {row.id}
@@ -169,17 +173,6 @@ export default function App() {
               <StyledTableCell align="left">{row.email}</StyledTableCell>
               <StyledTableCell align="left">{row.contactNo}</StyledTableCell>
 
-              <StyledTableCell align="left">
-                
-                         <Link
-                         to={`/retrieve/${row.id}`}
-                         state={{ row }}
-                       >
-       <Button variant="contained" color="primary">View Case</Button>
-                         </Link>
-                         
-                  
-                </StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
