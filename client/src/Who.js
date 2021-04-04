@@ -68,17 +68,13 @@ export default function App() {
   //backend
 
 
-    // useEffect(() =>  {
-    //   Axios.get('http://localhost:3001/api/profile')
-    //   .then(function (response) {
-    //     console.log(response.data.table)
-    //     // setUser(response.data.recordset)
-    //     setUser(response.data.table)
- 
-    //   })
-
-  
-    // })
+    useEffect(() =>  {
+      Axios.get('http://localhost:3001/api/who')
+      .then(function (response) {
+        setUser(response.data.recordset)
+        console.log(response.data.recordset)
+      })
+    })
 
 
   return (
@@ -103,14 +99,14 @@ export default function App() {
         </TableHead>
         <TableBody>
           {/* {console.log(user)} */}
-          {/* {user.map((row) => (
+          {user.map((row) => (
             <StyledTableRow key={row.nric}>
-              <StyledTableCell align="left">{row.nric}</StyledTableCell>
-              <StyledTableCell align="left">{row.firstName}</StyledTableCell>
-              <StyledTableCell align="left">{row.lastName}</StyledTableCell>
-
+              <StyledTableCell align="left">{row.hospitalName}</StyledTableCell>
+              <StyledTableCell align="left">{row.totalNumofCases}</StyledTableCell>
+              <StyledTableCell align="left">{row.totalConfirmedCases}</StyledTableCell>
+              <StyledTableCell align="left">{row.totalNewlyReportedCases}</StyledTableCell>
             </StyledTableRow>
-          ))} */}
+          ))}
         </TableBody>
       </Table>
     </TableContainer>
