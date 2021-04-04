@@ -5,7 +5,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MOH from './Moh';
 import Upload from './Upload';
 import Retrieve from './Retrieve'
-import './App.css'; 
+import Who from './Who'
+import './App.css';
   
 class App extends Component { 
   render() { 
@@ -16,6 +17,7 @@ class App extends Component {
               <Route path='/' element={<MOH/>}></Route> 
               <Route path='/upload' element={<Upload/>}></Route> 
               <Route path='/retrieve/:id' element={<Retrieve/>}></Route>
+              <Route path='/who' element={<Who/>}></Route>
             </Routes> 
          
        </BrowserRouter> 

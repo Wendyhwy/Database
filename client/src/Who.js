@@ -12,7 +12,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import Axios from "axios";
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,17 +68,17 @@ export default function App() {
   //backend
 
 
-    useEffect(() =>  {
-      Axios.get('http://localhost:3001/api/profile')
-      .then(function (response) {
-        console.log(response.data.table)
-        // setUser(response.data.recordset)
-        setUser(response.data.table)
+    // useEffect(() =>  {
+    //   Axios.get('http://localhost:3001/api/profile')
+    //   .then(function (response) {
+    //     console.log(response.data.table)
+    //     // setUser(response.data.recordset)
+    //     setUser(response.data.table)
  
-      })
+    //   })
 
   
-    })
+    // })
 
 
   return (
@@ -88,46 +88,29 @@ export default function App() {
         <img src={logo} />
         </Grid>
         <Grid container item xs={12}>
-          MOH Coronavirus Disease (COVID-19) Dashboard
+          Total Number of Cases Dashboard
         </Grid>
         <Grid container item xs={12}>
         <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell align="left">NRIC</StyledTableCell>
-            <StyledTableCell align="left">First Name</StyledTableCell>
-            <StyledTableCell align="left">Last Name</StyledTableCell>
-            <StyledTableCell align="left">Contact No.</StyledTableCell>
-            <StyledTableCell align="left">Token Id</StyledTableCell>
-            <StyledTableCell align="left">Email</StyledTableCell>
-            <StyledTableCell align="left">Action</StyledTableCell>
+            <StyledTableCell align="left">Hospital</StyledTableCell>
+            <StyledTableCell align="left">Total Number of Cases</StyledTableCell>
+            <StyledTableCell align="left">Total Confirmed Cases</StyledTableCell>
+            <StyledTableCell align="left">Newly Reported Cases (as of today)</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {/* {console.log(user)} */}
-          {user.map((row) => (
+          {/* {user.map((row) => (
             <StyledTableRow key={row.nric}>
               <StyledTableCell align="left">{row.nric}</StyledTableCell>
               <StyledTableCell align="left">{row.firstName}</StyledTableCell>
               <StyledTableCell align="left">{row.lastName}</StyledTableCell>
-              <StyledTableCell align="left">{row.contactId}</StyledTableCell>
-              <StyledTableCell align="left">{row.tokenId}</StyledTableCell>
-              <StyledTableCell align="left">{row.email}</StyledTableCell>
 
-              <StyledTableCell align="left">
-                
-                         <Link
-                         to={`/retrieve/items`}
-                         state={{ row }}
-                       >
-       <Button variant="contained" color="primary">View Case</Button>
-                         </Link>
-                         
-                  
-                </StyledTableCell>
             </StyledTableRow>
-          ))}
+          ))} */}
         </TableBody>
       </Table>
     </TableContainer>

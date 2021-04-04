@@ -3,8 +3,8 @@ var bodyParser = require('./node_modules/body-parser')
 const sql = require("mssql");
 var app = require('express')();
 var http = require('http') 
+const crypto = require('crypto');
 var cors = require('cors')
-// var bodyParser = require("body-parser");
 app.use(cors())
 
 
@@ -20,19 +20,32 @@ app.use(bodyParser.json());
 //     "synchronize": true,
 // }
 
+// var dbConfig = {
+//   server: "csc2008database.database.windows.net",
+//   database: "databaseproject",
+//   port: 1433,
+//   user:'database',
+//   password:'Password123',
+//   "synchronize": true,
+// }
+
 var dbConfig = {
-  server: "csc2008database.database.windows.net",
-  database: "databaseproject",
+  server: "mohserversg.database.windows.net",
+  database: "mohDb",
   port: 1433,
-  user:'database',
+  user:'mohadmin',
   password:'Password123',
   "synchronize": true,
+
 }
 
 module.exports = dbConfig;
 
+let secret = '123456781234567812345678';
+// let iv = crypto.randomBytes(16)
+let iv = Buffer.from('qwertyuiopasdfgh','utf-8')
+let key =  crypto.createHash('sha256').update(String(secret)).digest('base64').substr(0, 32);
 
-//GET PROFILE
 app.post("/api/profile", (req,res) => {
   const nric = req.body.nric
   const firstName = req.body.firstName
@@ -41,11 +54,19 @@ app.post("/api/profile", (req,res) => {
   const tokenId = req.body.tokenId
   const registeredAdd = req.body.registeredAdd
   const email = req.body.email
-  var contactQuery = "INSERT INTO [Contact] (contactNo, registeredAdd, email) VALUES ('" + contactNo + "','" + registeredAdd + "','" + email + "'); INSERT INTO [Profile] (nric, firstName, lastName,contactId, tokenId) VALUES ('" + nric + "','" + firstName + "','" + lastName + "',(SELECT contactNo from [CONTACT] WHERE contactNo = '" + contactNo + "'),(SELECT tokenId from [Token] WHERE tokenId = '" + tokenId + "'))"
-  // , 'SELECT "+tokenId+" WHERE "+tokenId+" = 1')
-  // var profileQuery = "INSERT INTO [Profile] (nric, firstName, lastName,contactId, tokenId) VALUES ('" + nric + "','" + firstName + "','" + lastName + "','SELECT contactId WHERE contactId = "+contactNo+"', 'SELECT "+tokenId+" WHERE "+tokenId+" = 1')"
-    // executeQuery (res, query);
-    sql.connect(dbConfig, function (err) {
+
+
+
+  let cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
+  let encrypted = cipher.update(nric, 'utf-8', 'hex');
+
+  encrypted += cipher.final('hex')
+  console.log("encrypted",encrypted)
+  console.log("type of", typeof(encrypted))
+
+  var contactQuery = "INSERT INTO [Contact] (contactNo, registeredAdd, email) VALUES ('" + contactNo + "','" + registeredAdd + "','" + email + "'); INSERT INTO [Profile] (nric, firstName, lastName,contactId, tokenId) VALUES ('" + encrypted + "','" + firstName + "','" + lastName + "',(SELECT contactNo from [CONTACT] WHERE contactNo = '" + contactNo + "'),(SELECT tokenId from [Token] WHERE tokenId = '" + tokenId + "'))"
+
+  sql.connect(dbConfig, function (err) {
       console.log("connectedfsafasdfsad")
         if (err) {   
             console.log("Error while connecting database :- " + err);
@@ -58,14 +79,14 @@ app.post("/api/profile", (req,res) => {
     
           
           request.query(contactQuery,function (err, response) {
-              console.log(response)
+             
             if (err) {
               console.log("Error while querying database :- " + err);
               res.send(err);
             
               }
               else {
-                console.log(response);
+               
                 res.send(response);
               }
            
@@ -79,6 +100,8 @@ app.post("/api/profile", (req,res) => {
 
 app.get("/api/profile", function(req, res){
 
+
+
   var query = "SELECT nric, firstName , lastName, tokenId,contactId, email, registeredAdd FROM [Profile],[Contact] WHERE [Profile].contactId = [Contact].contactNo";
   sql.connect(dbConfig, function (err) {
       if (err) {   
@@ -91,14 +114,25 @@ app.get("/api/profile", function(req, res){
         var request = new sql.Request();
         // query to the database
         request.query(query, function (err, response) {
-            console.log(response)
           if (err) {
             console.log("Error while querying database :- " + err);
             res.send(err);
             }
             else {
-              res.send(response);
+              var obj = {
+                table: []
+             };
 
+              (response.recordset).map((row) => {
+
+                let decipher = crypto.createDecipheriv('aes-256-cbc', key, iv);
+                let decrypted = decipher.update(row.nric, 'hex', 'utf-8')
+                decrypted += decipher.final('utf-8')
+                obj.table.push({"nric":decrypted, "firstName":row.firstName, "lastName":row.lastName,"tokenId":row.tokenId,"contactId":row.contactId,"email":row.email,"registeredAdd":row.registeredAdd})
+
+              })
+              console.log(obj)
+              res.send(obj)
             }
          
         });
@@ -108,7 +142,6 @@ app.get("/api/profile", function(req, res){
 
 app.get("/api/other", function(req, res){
   const tokenId = req.query.tokenId
-
   var query = "SELECT nric, firstName , lastName, tokenId,contactId, email, registeredAdd FROM [Profile], [Contact], [TransactionDetails] WHERE [Profile].contactId = [Contact].contactNo and [Profile].tokenId = (SELECT otherTokenId FROM [TransactionDetails] WHERE [TransactionDetails].userTokenId = '" + tokenId + "')";
   sql.connect(dbConfig, function (err) {
       if (err) {   
@@ -121,7 +154,7 @@ app.get("/api/other", function(req, res){
         var request = new sql.Request();
         // query to the database
         request.query(query, function (err, response) {
-            console.log(response)
+         
           if (err) {
             console.log("Error while querying database :- " + err);
             res.send(err);
