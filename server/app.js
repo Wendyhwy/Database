@@ -75,7 +75,7 @@ app.post("/api/profile", (req,res) => {
   // console.log("encrypted",encrypted)
   // console.log("type of", typeof(encrypted))
 
-  var contactQuery = "INSERT INTO [Contact] (contactNo, registeredAdd, email) VALUES ('" + contactNo + "','" + registeredAdd + "','" + email + "'); INSERT INTO [Profile] (nric, firstName, lastName,contactNo, tokenId) VALUES ('" + tokenId + "','" + firstName + "','" + lastName + "',(SELECT contactNo from [CONTACT] WHERE contactNo = '" + contactNo + "'),'" + tokenId + "'"
+  var contactQuery = "INSERT INTO [Contact] (contactNo, registeredAdd, email) VALUES ('" + contactNo + "','" + registeredAdd + "','" + email + "'); INSERT INTO [Profile] (nric, firstName, lastName,contactNo, tokenId) VALUES ('" + nric + "','" + firstName + "','" + lastName + "',(SELECT contactNo from [CONTACT] WHERE contactNo = '" + contactNo + "'),'" + tokenId + "')"
 
   sql.connect(dbConfig, function (err) {
       console.log("connectedfsafasdfsad")
