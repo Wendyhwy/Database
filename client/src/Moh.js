@@ -71,9 +71,8 @@ export default function App() {
     useEffect(() =>  {
       Axios.get('http://localhost:3001/api/profile')
       .then(function (response) {
-        console.log(response.data.table)
-        // setUser(response.data.recordset)
-        setUser(response.data.table)
+        setUser(response.data.recordset)
+        // setUser(response.data.table)
  
       })
 
@@ -111,7 +110,7 @@ export default function App() {
               <StyledTableCell align="left">{row.nric}</StyledTableCell>
               <StyledTableCell align="left">{row.firstName}</StyledTableCell>
               <StyledTableCell align="left">{row.lastName}</StyledTableCell>
-              <StyledTableCell align="left">{row.contactId}</StyledTableCell>
+              <StyledTableCell align="left">{row.contactNo}</StyledTableCell>
               <StyledTableCell align="left">{row.tokenId}</StyledTableCell>
               <StyledTableCell align="left">{row.email}</StyledTableCell>
 

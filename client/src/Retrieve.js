@@ -167,7 +167,7 @@ export default function Retrieve() {
               <StyledTableCell align="left">{row.nric}</StyledTableCell>
               <StyledTableCell align="left">{row.firstName}</StyledTableCell>
               <StyledTableCell align="left">{row.lastName}</StyledTableCell>
-              <StyledTableCell align="left">{row.contactId}</StyledTableCell>
+              <StyledTableCell align="left">{row.contactNo}</StyledTableCell>
               <StyledTableCell align="left">{row.tokenId}</StyledTableCell>
               <StyledTableCell align="left">{row.email}</StyledTableCell>
             </StyledTableRow>
