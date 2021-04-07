@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import logo from './moh_logo.png';
+import logo from './National_University_Health_System_Logo.png';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 700,
   },
+  marginBottom: {
+    marginBottom: theme.spacing(3)
+  }
 }));
 
 function createData(id, nric, firstName, lastName, email, contactNo) {
@@ -69,7 +72,7 @@ export default function App() {
 
 
     useEffect(() =>  {
-      Axios.get('http://localhost:3001/api/who')
+      Axios.get('http://localhost:3002/api/nuhs')
       .then(function (response) {
         setUser(response.data.recordset)
         console.log(response.data.recordset)
@@ -80,10 +83,10 @@ export default function App() {
   return (
  
     <div className={classes.root}>
-        <Grid container>
+        <Grid container className={classes.marginBottom}>
         <img src={logo} />
         </Grid>
-        <Grid container item xs={12}>
+        <Grid container item xs={12} className={classes.marginBottom}>
           Total Number of Cases Dashboard
         </Grid>
         <Grid container item xs={12}>

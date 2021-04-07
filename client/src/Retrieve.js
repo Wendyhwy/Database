@@ -81,6 +81,9 @@ const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 700,
   },
+  marginBottom: {
+    marginBottom: theme.spacing(3)
+  }
 }));
 
 function createData(id, nric, firstName, lastName, email, contactNo) {
@@ -141,10 +144,10 @@ export default function Retrieve() {
 
   return (
     <div className={classes.root}>
-        <Grid container>
+        <Grid container className={classes.marginBottom}>
         <img src={logo} />
         </Grid>
-        <Grid container item xs={12}>
+        <Grid container item xs={12} className={classes.marginBottom}>
           Infected person: {location.state.row.firstName + " " + location.state.row.lastName}
         </Grid>
         <Grid container item xs={12}>

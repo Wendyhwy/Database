@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
       flexGrow: 1,
       margin: theme.spacing(3)
     }
+    
   }));
 
 export default function Upload() {

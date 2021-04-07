@@ -12,12 +12,11 @@ class App extends Component {
   render() { 
     return ( 
        <BrowserRouter> 
- 
             <Routes> 
               <Route path='/' element={<MOH/>}></Route> 
               <Route path='/upload' element={<Upload/>}></Route> 
               <Route path='/retrieve/:id' element={<Retrieve/>}></Route>
-              <Route path='/who' element={<Who/>}></Route>
+              <Route path='/nuhs' element={<Who/>}></Route>
             </Routes> 
          
        </BrowserRouter> 

@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
   table: {
     minWidth: 700,
   },
+  marginBottom: {
+    marginBottom: theme.spacing(3)
+  }
 }));
 
 function createData(id, nric, firstName, lastName, email, contactNo) {
@@ -83,10 +86,10 @@ export default function App() {
   return (
  
     <div className={classes.root}>
-        <Grid container>
+        <Grid container className={classes.marginBottom}>
         <img src={logo} />
         </Grid>
-        <Grid container item xs={12}>
+        <Grid container item xs={12} className={classes.marginBottom}>
           MOH Coronavirus Disease (COVID-19) Dashboard
         </Grid>
         <Grid container item xs={12}>

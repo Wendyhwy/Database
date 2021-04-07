@@ -28,7 +28,7 @@ module.exports = dbConfig;
 
 
 
-app.get("/api/who", function(req, res){
+app.get("/api/nuhs", function(req, res){
 
 
     var query = "SELECT hospitalName, totalNumofCases , totalConfirmedCases, totalNewlyReportedCases FROM [covidCases],[hospitalInfo] WHERE [covidCases].hospitalId = [hospitalInfo].hospitalId";
@@ -58,7 +58,7 @@ app.get("/api/who", function(req, res){
   });
 
 
-app.listen(3001, () => {
+app.listen(3002, () => {
     console.log("hellowho")
 });
 

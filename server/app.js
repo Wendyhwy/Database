@@ -1,4 +1,3 @@
-
 var bodyParser = require('./node_modules/body-parser')
 const sql = require("mssql");
 var app = require('express')();
